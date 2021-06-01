@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .body {
+      min-width: 600px;
+      height: 1000px;
+      overflow-x: scroll;
+    }
+
+    .wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+    }
+
+    .columns {
+      display: flex;
+      flex: 1;
+    }
+
+    .col1 {
+      width: 200px;
+      order: 1;
+    }
+
+    .col2 {
+      min-width: 100px;
+      flex: 1;
+      order: 2;
+    }
+
+    .col3 {
+      width: 300px;
+      order: 3;
+    }
+
+    .box {
+      border-width: 1px;
+      border-style: solid;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <section class="content">
+      <div class="columns">
+        <div class="col1 box">
+          <input type="text" id="input1" placeholder="Enter number value">
+        </div>
+        <div class="col2 box">
+          <select id="select1" onchange="changeFunc(value);">
+            <option value="prime" selected="selected">isPrime</option>
+            <option value="fibonacci">isFibonacci</option>
+          </select>
+        </div>
+        <div class="col3 box" id="result"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    input1.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        var input1 = document.getElementById("input1");
+        var select1 = document.getElementById("select1");
+        var selectedValue = select1.options[select1.selectedIndex].value;
+
+        var x = input1.value;
+        if (x === "") {
+          document.getElementById("result").innerHTML = "";
+          return
+        } else {
+          if (isNaN(x)) {
+            document.getElementById("result").innerHTML = "";
+            alert("Must input number");
+            return
+          } else {
+            if (x < 0) {
+              x = 1;
+            } else {
+              x = Math.round(x);
+            }
+            showCol3(selectedValue, x);
+            return input1.value = x;
+          }
+        }
+      }
+    })
+
+    function showCol3(p1, p2) {
+      var res = "";
+      if (p1 === "prime") {
+        res = checkPrime(p2);
+      } else if (p1 === "fibonacci") {
+        res = checkFib(p2);
+      }
+      document.getElementById("result").innerHTML = res;
+      return
+    }
+
+    function changeFunc($i) {
+      var input1 = document.getElementById("input1");
+      var select1 = document.getElementById("select1");
+      var selectedValue = $i;
+
+      var x = input1.value;
+      if (x === "") {
+        document.getElementById("result").innerHTML = "";
+        return
+      } else {
+        if (isNaN(x)) {
+          document.getElementById("result").innerHTML = "";
+          return
+        } else {
+          if (x < 0) {
+            x = 1;
+          } else {
+            x = Math.round(x);
+          }
+
+          showCol3(selectedValue, x);
+          return
+        }
+      }
+    }
+
+    function checkPrime(number) {
+      let isPrime = true;
+
+      if (number === 1) {
+        return false;
+      } else if (number > 1) {
+        for (let i = 2; i < number; i++) {
+          if (number % i == 0) {
+            isPrime = false;
+            break;
+          }
+        }
+        return isPrime;
+      } else {
+        return false;
+      }
+    }
+
+    function checkFib(num) {
+      var fibSeq = [0, 1],
+        i = 1,
+        fibSeqL;
+      for (i; i <= num; i = (fibSeq[fibSeqL - 1] + fibSeq[fibSeqL])) {
+        fibSeq.push(i);
+        fibSeqL = fibSeq.length - 1;
+      }
+      return fibSeq[fibSeqL] === num;
+    }
+  </script>
+
+</body>
+
+</html>
